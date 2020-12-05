@@ -91,7 +91,7 @@ public class main {
         fr.randomShuffleSort(elem);
         for(int i =0; i < size; i++) {
             if(arr.containsKey(elem[i])) {
-                System.out.println(arr.get(elem[i]), i+1);
+                System.out.println(arr.get(elem[i]) + " "+ i+1);
                 works=false;
             } else {
                 arr.put(target-elem[i], i+1);
