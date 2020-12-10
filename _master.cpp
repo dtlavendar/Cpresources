@@ -84,8 +84,21 @@ struct segtree
 
             lChild = new segtree(left, mid, arr);
             rChild = new segtree(mid + 1, right, arr);
-            sum = lChild->sum + rChild->sum;
+            this->update();
         }
+    }
+    void update(){
+        if(leftmost==rightmost) return;
+        sum=lChild->sum+rChild->sum;
+    }
+    void pointUpdate(int index, int newVal) {
+        if(leftmost==rightmost) {
+            sum=newVal;
+            return;
+        }
+        if(index<=lChild->rightmost) lChild->pointUpdate(index, newVal);
+        else rChild->pointUpdate(index, newVal);
+        update();
     }
     ll query(int left, int right)
     {
@@ -168,13 +181,7 @@ namespace number_theory {
 }
 void solve()
 {
-	int A;
-    cin >> A;
-    while(A--) {
-        int case_num;
-        cin >> case_num;
-        for(int i=1; i <= case_num; i++) cout <<(i%2==0 "YEES":"NOON");
-    }
+
 }
 
 
