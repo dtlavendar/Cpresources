@@ -179,15 +179,19 @@ namespace number_theory {
     }
 
 }
+
 void solve()
 {
-
+	int n;
+	cin >> n;
 }
-
-
 int main()
 {
     fastio;
 
-    solve();
+    int tc;
+    cin >> tc;
+    while(tc--){
+        solve();
+    }
 }
