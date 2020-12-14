@@ -11,7 +11,7 @@ using namespace std;
 #define EACH(v, V) for (auto &v : V)
 #define FOR(n) for (int i = 0; i < n; i++)
 #define FORn(i, n) for (int i = 0; i < n; i++)
-#define offset(V, i)  for (auto &v : v) v = i
+#define offset(V, i)  for (auto &v : V) v = i
 #define all(x) x.begin(), x.end()
 #define f first
 #define s second
