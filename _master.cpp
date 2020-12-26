@@ -1,21 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define sz(a) int(a.size())
+#define atoi(x) (x-'0')
+#define cnst const
+using ll = long long;
 
 #define ar array
-#define ll long long
 #define it int64_t
 #define vt vector
+const ll inf = ll(1e18);
 #define pll pair<ll, ll>
 #define sum(x) int(accumulate(x.begin(), x.end(), 0))
 #define fastio ios_base::sync_with_stdio(false);cin.tie(nullptr);
 #define EACH(v, V) for (auto &v : V)
-#define FOR(n) for (int i = 0; i < n; i++)
-#define FORn(i, n) for (int i = 0; i < n; i++)
+#define FOR(n) for (int i = 0; i < int(n); i++)
+#define FORn(i, n) for (int i = 0; i < int(n); i++)
 #define offset(V, i)  for (auto &v : V) v = i
 #define all(x) x.begin(), x.end()
 #define f first
 #define s second
-
+#define minel(x) (*min_element(all(x)))
+struct edge {
+    ll from;
+    ll to;
+    ll cost;
+};
+bool operator<(edge t, edge f) {
+    return t.cost > f.cost;
+}
 struct fast_mod
 {
 
@@ -62,6 +74,62 @@ struct bintree
         right = NULL;
     }
 };
+namespace graph_theory {
+	void fast_io() {
+		ios::sync_with_stdio(false);cin.tie(nullptr);
+	}
+	ll djikstra(vector<pll> adjList[], int totalNodes, int u, int v) {
+		priority_queue<pll, vt<pll>, greater<pll>> pq;
+		// assuming adjList is {cost, node};
+		vt<ll> dist(200000, inf);
+		dist[u] = 0;
+		vt<bool> vis(200000, 0);
+		while(pq.size()) {
+			ll t = pq.top().second;
+			pq.pop();
+			if(vis[t]) continue;
+			vis[t]=1;
+			for(auto &edge: adjList[t]) {
+				ll x = edge.first;
+				ll y = edge.second;
+				if(dist[y] > dist[t] + x) {
+					dist[y] = dist[t] + x;
+					pq.push({dist[y], y});
+				}
+			}
+		}
+		return dist[v];
+	}
+	void bfs(vector<ll> adjList[], vt<bool> &vis, int n) {
+		queue<int> s;
+		s.push(n);
+		while(s.size()) {
+			int a = s.front();
+			s.pop();
+			if(vis[a]) continue;
+			vis[a]=true;
+			for(auto &edge: adjList[a]) {
+				s.push(edge);
+			}
+		}
+	}
+	void dfs(vector<ll> adjList[], vt<bool>& vis, int n) {
+		stack<int> curNodes;
+		curNodes.push(n);
+		while(curNodes.size()) {
+			int t = curNodes.top();
+			curNodes.pop();
+			if(vis[t]) continue;
+			vis[t]=true;
+			for(auto &edge: adjList[t]) {
+				curNodes.push(edge);
+			}
+		}
+	}
+}
+#define psh push
+
+#define pb push_back
 struct segtree
 {
 
@@ -113,20 +181,33 @@ struct segtree
         return lChild->query(left, right) + rChild->query(left, right);
     }
 };
-class Graph {
-	int V;
-	list<int> *adj;
-public:
-
-	Graph(int V);
-	void addEdge(int u, int v);
-
+struct udGraph {
+    vector<vector<int>> adjList;
+    vector<bool> vis;
+    int size;
+    udGraph(int n) {
+        this->size = n;
+        vis.resize(n);
+        adjList.resize(n);
+    }
+    void addNodes(int u, int v) {
+        adjList[u].push_back(v);
+        adjList[v].push_back(u);
+    }
+    void dfs(int n) {
+        vis[n]=true;
+        for(auto &edge: adjList[n]) if(!this->vis[edge]) dfs(edge);
+    }
+    bool connected() {
+        this->dfs(0);
+        int n = this->size;
+        for(int i =0; i < n; i++)
+            if(!this->vis[i]) return false;
+        return true;
+        // O(n)
+    }
 
 };
-Graph::Graph(int V) {
-	this->V = V;
-	adj = new list<int>[V];
-}
 template<typename T> 
 bool binsearch(vector<T> &nums, int target)
 {
