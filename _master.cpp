@@ -18,6 +18,7 @@ using ll = long long;
 #define EACH(v, V) for (auto &v : V)
 #define FOR(n) for (int i = 0; i < int(n); i++)
 #define FORn(i, n) for (int i = 0; i < int(n); i++)
+#define rep1(i, a, b, d) for(int i =a; i < (b); i+=d)
 #define offset(V, i)  for (auto &v : V) v = i
 #define all(x) x.begin(), x.end()
 const int mod = 1e9;
@@ -25,8 +26,7 @@ const ll inf = ll(1e18);
 const int mxN = 2e5+1;
 #define minel(x) (*min_element(all(x)))
 #define maxel(x) (*max_element(all(x)))
-#define rep1(i, a, b, d) for(int i =a; i < (b); i+=d)
-rep1
+
 #define eval(x) (x)
 #define numtheory number_theory
 
@@ -340,7 +340,7 @@ void solve()
     #ifdef TDPENCIL
     dbg(ans);
     #endif
-    
+
     
 
 
