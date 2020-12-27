@@ -1,14 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 #define sz(a) int(a.size())
 #define atoi(x) (x-'0')
 #define cnst const
-using ll = long long;
+
 #define endl '\n'
 #define ar array
 #define it int64_t
 #define vt vector
-const ll inf = ll(1e18);
+
 #define pll pair<ll, ll>
 #define sum(x) int(accumulate(x.begin(), x.end(), 0))
 #define fastio ios_base::sync_with_stdio(false);cin.tie(nullptr);
@@ -18,6 +19,8 @@ const ll inf = ll(1e18);
 #define offset(V, i)  for (auto &v : V) v = i
 #define all(x) x.begin(), x.end()
 const int mod = 1e9;
+const ll inf = ll(1e18);
+const int mxN = 2e5+1;
 #define minel(x) (*min_element(all(x)))
 void dbg_out() {cerr << endl;}
 
@@ -77,16 +80,19 @@ struct fast_mod
         return x % mod;
     }
 };
-struct bintree
-{
-    struct bintree *left;
-    struct bintree *right;
+
+struct binary_tree {
+    struct binary_tree *left;
+    struct binary_tree *right;
     int val;
-    bintree(int v)
-    {
-        val = v;
-        left = NULL;
-        right = NULL;
+    binary_tree(int n) {
+        val=n;
+        left=NULL;
+        right=NULL;
+    }
+    int height(struct binary_tree *node) {
+        if(node==NULL) return 0;
+        return 1 + max(height(node->left), height(node->right));
     }
 };
 namespace graph_theory {
@@ -156,7 +162,7 @@ struct segtree
     
     int leftmost, rightmost;
     
-    segtree(int left, int right, vector<int> &arr)
+    template<class T> segtree(int left, int right, vector<T> &arr)
     {
 
         leftmost = left;
@@ -196,6 +202,7 @@ struct segtree
         if (left > rightmost || right < leftmost)
         {
             return 0LL;
+            // remember to make INF when doing contest!
         }
         else if (left <= leftmost && right >= rightmost)
             return sum;
@@ -259,14 +266,14 @@ bool binsearch(vector<T> &nums, int target)
     return false;
 }
 namespace number_theory {
-	vector<int> sieve(int n) {
+	template<class T> vector<T> sieve(int n) {
 		bool prime[150000];
 
         for(int i =0; i <= n; i++) prime[i]=1;
 
 		for(int i = 2; i <= n; i++)if(prime[i]) for(int j=i*i; j <= n; j+=i) prime[j]=0;
 
-		vector<int> ans;
+		vector<T> ans;
 
 		for(int i =2; i <=n; i++) if(prime[i]) ans.push_back(i);
 
@@ -319,11 +326,18 @@ namespace number_theory {
     }
 
 }
-
 void solve()
 {
     
+    #ifdef TDPENCIL
+    dbg(ans);
+    #endif
+
+    
+    
+
 }
+
 int main()
 {
     fastio;
