@@ -4,7 +4,8 @@ using ll = long long;
 #define sz(a) int(a.size())
 #define atoi(x) (x-'0')
 #define cnst const
-
+#define lb lower_bound
+#define ub upper_bound 
 #define endl '\n'
 #define ar array
 #define it int64_t
@@ -21,12 +22,13 @@ using ll = long long;
 #define rep1(i, a, b, d) for(int i =a; i < (b); i+=d)
 #define offset(V, i)  for (auto &v : V) v = i
 #define all(x) x.begin(), x.end()
-const int mod = 1e9;
+const int mod = 1e9 + 7;
 const ll inf = ll(1e18);
 const int mxN = 2e5+1;
 const double pi = 3.1415926535897932384626;
 #define minel(x) (*min_element(all(x)))
 #define maxel(x) (*max_element(all(x)))
+
 #define findel(x, y) (lower_bound(all(x), y)-x.begin())
 #define eval(x) (x)
 #define numtheory number_theory
@@ -34,10 +36,12 @@ const double pi = 3.1415926535897932384626;
 #define pi pr<int,int>
 #define ts to_string
 #define double dbl
-
+#define tuple tpl
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); }
 ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } 
 
+constexpr int p2(int x) { return 1<<x; }
+constexpr int msk2(int x) { return p2(x)-1; }
 
 void dbg_out() {cerr << endl;}
 
@@ -57,8 +61,15 @@ typedef pr<ll,ll> pl;
 typedef pr<string, ll> psl;
 typedef pr<ll, string> pls;
 typedef string str;
-typedef acl 
+typedef queue<int> qi;
+#define YES "YES"
+#define NO "NO"
+#define Yes "Yes"
+#define No "No"
+#define atcoder(event) (event?Yes:No)
 
+template<class T> void remDup(vector<T>& v) { // sort and remove duplicates
+    sort(all(v)); v.erase(unique(all(v)),end(v)); }
 
 struct edge {
     ll from;
@@ -177,6 +188,8 @@ namespace graph_theory {
 			}
 		}
 	}
+
+
 }
 #define psh push
 
@@ -240,19 +253,12 @@ struct segtree
         return lChild->query(left, right) + rChild->query(left, right);
     }
 };
-struct udGraph {
+template<int SZ> struct udGraph{
     vector<vector<int>> adjList;
     
     vector<bool> vis;
     
-    int size;
-    udGraph(int n) {
-        this->size = n;
-        
-        vis.resize(n);
-        
-        adjList.resize(n);
-    }
+    int size = SZ;
     void addNodes(int u, int v) {
         
         adjList[u].push_back(v);
@@ -364,7 +370,14 @@ void solve()
     #endif
 
     
-
+    pqg<int> a;
+    int n;
+    cin >> n;
+    rep(i, 0, n) {
+        int b;
+        cin >> b;
+        a.psh(b);
+    }
 
 }
 
