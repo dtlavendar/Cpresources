@@ -24,11 +24,20 @@ using ll = long long;
 const int mod = 1e9;
 const ll inf = ll(1e18);
 const int mxN = 2e5+1;
+const double pi = 3.1415926535897932384626;
 #define minel(x) (*min_element(all(x)))
 #define maxel(x) (*max_element(all(x)))
-
+#define findel(x, y) (lower_bound(all(x), y)-x.begin())
 #define eval(x) (x)
 #define numtheory number_theory
+#define pr pair
+#define pi pr<int,int>
+#define ts to_string
+#define double dbl
+
+ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); }
+ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } 
+
 
 void dbg_out() {cerr << endl;}
 
@@ -37,6 +46,19 @@ template<typename T_container, typename T = typename enable_if<!is_same<T_contai
 
 template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__);
+template<class T> using pqg = priority_queue<T, vt<T>, greater<T>>;
+const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
+constexpr int pct(int x) { return __builtin_popcount(x); } 
+
+typedef vector<int> vi;
+typedef vector<ll> vl;
+
+typedef pr<ll,ll> pl;
+typedef pr<string, ll> psl;
+typedef pr<ll, string> pls;
+typedef string str;
+typedef acl 
+
 
 struct edge {
     ll from;
@@ -356,3 +378,11 @@ int main()
         solve();
     }
 }
+/* stuff you should look for
+    * int overflow, array bounds
+    * special cases (n=1?)
+    * do smth instead of nothing and stay organized
+    * WRITE STUFF DOWN
+    * DON'T GET STUCK ON ONE APPROACH
+*/
+// Thanks benq!
