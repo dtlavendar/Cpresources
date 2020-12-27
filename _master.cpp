@@ -9,10 +9,12 @@ using ll = long long;
 #define ar array
 #define it int64_t
 #define vt vector
-
+#define gcd __gcd
+#define lcm(x, y) (x*y/(gcd(x, y)))
 #define pll pair<ll, ll>
 #define sum(x) int(accumulate(x.begin(), x.end(), 0))
 #define fastio ios_base::sync_with_stdio(false);cin.tie(nullptr);
+#define rep(i, a, b) for(int i =a; i < (b); i++)
 #define EACH(v, V) for (auto &v : V)
 #define FOR(n) for (int i = 0; i < int(n); i++)
 #define FORn(i, n) for (int i = 0; i < int(n); i++)
@@ -22,6 +24,12 @@ const int mod = 1e9;
 const ll inf = ll(1e18);
 const int mxN = 2e5+1;
 #define minel(x) (*min_element(all(x)))
+#define maxel(x) (*max_element(all(x)))
+#define rep1(i, a, b, d) for(int i =a; i < (b); i+=d)
+rep1
+#define eval(x) (x)
+#define numtheory number_theory
+
 void dbg_out() {cerr << endl;}
 
 template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
@@ -332,9 +340,9 @@ void solve()
     #ifdef TDPENCIL
     dbg(ans);
     #endif
+    
+    
 
-    
-    
 
 }
 
