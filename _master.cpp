@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
+#pragma GCC optimize("Ofast") 
 #define sz(a) int(a.size())
 #define atoi(x) (x-'0')
 #define cnst const
@@ -13,7 +14,7 @@ using ll = long long;
 #define gcd __gcd
 #define lcm(x, y) (x*y/(gcd(x, y)))
 #define pll pair<ll, ll>
-#define sum(x) int(accumulate(x.begin(), x.end(), 0))
+#define sum(x) int(accumulate(x.begin(), x.end(), 0LL))
 #define fastio ios_base::sync_with_stdio(false);cin.tie(nullptr);
 #define rep(i, a, b) for(int i =a; i < (b); i++)
 #define EACH(v, V) for (auto &v : V)
@@ -22,55 +23,63 @@ using ll = long long;
 #define rep1(i, a, b, d) for(int i =a; i < (b); i+=d)
 #define offset(V, i)  for (auto &v : V) v = i
 #define all(x) x.begin(), x.end()
-const int mod = 1e9 + 7;
-const ll inf = ll(1e18);
-const int mxN = 2e5+1;
-const double pi = 3.1415926535897932384626;
+#define rall(x) x.rbegin(), x.rend()
+#define pqueue priority_queue
+#define YES "YES"
+#define NO "NO"
+#define Yes "Yes"
+#define No "No"
+#define atcoder(event) (event?Yes:No)
+#define psh push
+#define pb push_back
 #define minel(x) (*min_element(all(x)))
 #define maxel(x) (*max_element(all(x)))
-
 #define findel(x, y) (lower_bound(all(x), y)-x.begin())
 #define eval(x) (x)
 #define numtheory number_theory
 #define pr pair
 #define pi pr<int,int>
 #define ts to_string
-#define double dbl
-#define tuple tpl
+#define dbl double
+#define tpl tuple
+#define pv print_vector
+typedef vector<int> vi;
+typedef vector<ll> vl;
+typedef pr<ll,ll> pl;
+typedef pr<int,int> pii;
+typedef pr<it,it> pit;
+typedef pr<string, ll> psl;
+typedef pr<ll, string> pls;
+typedef string str;
+typedef vt<pll> vpl;
+typedef queue<int> qi;
+typedef queue<ll> ql;
+const int mod = 1e9 + 7;
+const ll inf = ll(1e18);
+const int mxN = 2e5+1;
+const double PI = 3.1415926535897932;
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); }
 ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } 
-
-constexpr int p2(int x) { return 1<<x; }
-constexpr int msk2(int x) { return p2(x)-1; }
-
-void dbg_out() {cerr << endl;}
-
 template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
 template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
-
+void dbg_out() {cerr << endl;}
 template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr << ' ' << H; dbg_out(T...); }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__);
 template<class T> using pqg = priority_queue<T, vt<T>, greater<T>>;
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 constexpr int pct(int x) { return __builtin_popcount(x); } 
-
-typedef vector<int> vi;
-typedef vector<ll> vl;
-
-typedef pr<ll,ll> pl;
-typedef pr<string, ll> psl;
-typedef pr<ll, string> pls;
-typedef string str;
-typedef queue<int> qi;
-#define YES "YES"
-#define NO "NO"
-#define Yes "Yes"
-#define No "No"
-#define atcoder(event) (event?Yes:No)
-
+constexpr int p2(int x) { return 1<<x; }
+constexpr int msk2(int x) { return p2(x)-1; }
+template<class T> void print_vector(vector<T> &nums) {
+    for(auto &num: nums)
+        cout << num << " ";
+    cout << '\n';
+}
+template<class T> void print(T t) {
+    cout << t << "\n";
+}
 template<class T> void remDup(vector<T>& v) { // sort and remove duplicates
     sort(all(v)); v.erase(unique(all(v)),end(v)); }
-
 struct edge {
     ll from;
     ll to;
@@ -140,20 +149,20 @@ namespace graph_theory {
 	void fast_io() {
 		ios::sync_with_stdio(false);cin.tie(nullptr);
 	}
-	ll djikstra(vector<pll> adjList[], int totalNodes, int u, int v) {
-		priority_queue<pll, vt<pll>, greater<pll>> pq;
+	template<class T, class H> H djikstra(vector<T> adjList[], H totalNodes, H u, H v) {
+		pqg<T> pq;
 		// assuming adjList is {cost, node};
-		vt<ll> dist(200000, inf);
+		vt<H> dist(200000, inf);
 		dist[u] = 0;
 		vt<bool> vis(200000, 0);
 		while(pq.size()) {
-			ll t = pq.top().second;
+			T t = pq.top().second;
 			pq.pop();
 			if(vis[t]) continue;
 			vis[t]=1;
 			for(auto &edge: adjList[t]) {
-				ll x = edge.first;
-				ll y = edge.second;
+				T x = edge.first;
+				T y = edge.second;
 				if(dist[y] > dist[t] + x) {
 					dist[y] = dist[t] + x;
 					pq.push({dist[y], y});
@@ -191,21 +200,58 @@ namespace graph_theory {
 
 
 }
-#define psh push
 
-#define pb push_back
-struct segtree
+template<class T> struct fast_array {
+    vector<T> values;
+    fast_array(int n) {
+        values.resize(n);
+    }
+    
+    void add(T t) {
+        values.push_back(t);
+    }
+    int size() {
+        return (int) values.size();
+    }
+    void remove(T t) {
+        for(int i =0; i < values.size(); ++i) {
+            if(values[i] == t) {
+                swap(values[values.size()-1], values[i]);
+                break;
+            }
+        }
+        values.pop_back();
+    }
+    void arraysort() {
+        sort(values.begin(), values.end());
+    }
+    T get(int i) {
+        return values[i];      
+    }
+    void resize(int n) {
+        values.resize(n);
+    }
+    void printVec() {
+        for(auto &e: values) 
+            cout << e << " ";
+        cout << endl;
+    }
+    void clear() {
+        values.clear();
+    } 
+};
+template<class T> struct segtree
 {
 
     struct segtree *lChild;
     
     struct segtree *rChild;
     
-    ll sum;
+    T sum;
     
     int leftmost, rightmost;
     
-    template<class T> segtree(int left, int right, vector<T> &arr)
+    segtree(int left, int right, vector<T> &arr)
     {
 
         leftmost = left;
@@ -229,7 +275,7 @@ struct segtree
         if(leftmost==rightmost) return;
         sum=lChild->sum+rChild->sum;
     }
-    void pointUpdate(int index, int newVal) {
+    void pointUpdate(int index, T newVal) {
         if(leftmost==rightmost) {
             sum=newVal;
             return;
@@ -239,12 +285,12 @@ struct segtree
         else rChild->pointUpdate(index, newVal);
         update();
     }
-    ll query(int left, int right)
+    T query(int left, int right)
     {
 
         if (left > rightmost || right < leftmost)
         {
-            return 0LL;
+            return 0;
             // remember to make INF when doing contest!
         }
         else if (left <= leftmost && right >= rightmost)
@@ -360,36 +406,25 @@ namespace number_theory {
 
         return true;
     }
-
+}
+template<class T> void read(vector<T>&arr) {
+    for(auto &num: arr)
+        cin >> num;
 }
 void solve()
 {
     
-    #ifdef TDPENCIL
-    dbg(ans);
-    #endif
-
-    
-    pqg<int> a;
-    int n;
-    cin >> n;
-    rep(i, 0, n) {
-        int b;
-        cin >> b;
-        a.psh(b);
-    }
-
 }
-
 int main()
 {
     fastio;
 
     int tc = 1;
     cin >> tc;
-    while(tc--){
+	while(tc--){
         solve();
-    }
+
+	}
 }
 /* stuff you should look for
     * int overflow, array bounds
@@ -398,4 +433,5 @@ int main()
     * WRITE STUFF DOWN
     * DON'T GET STUCK ON ONE APPROACH
 */
+
 // Thanks benq!
