@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 call plug#begin("~/.vim/plugged")
-  " Plugin Section
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'frazrepo/vim-rainbow'
