@@ -1,26 +1,11 @@
-vector<int> parent;
-
-void setUp(int n) {
-	for(int i =0; i < n; i++)
-		parent.push_back(i);
-}
-void find(int p) {
-	while(p != parent[p]) {
-		parent[p] = parent[parent[p]];
-		p = parent[p];
+struct DSU {
+	vector<int> e; void init(int N) { e = vector<int>(N,-1); }
+	int get(int x) { return e[x] < 0 ? x : e[x] = get(e[x]); } 
+	bool sameSet(int a, int b) { return get(a) == get(b); }
+	int size(int x) { return -e[get(x)]; }
+	bool unite(int x, int y) { // union by size
+		x = get(x), y = get(y); if (x == y) return 0;
+		if (e[x] > e[y]) swap(x,y);
+		e[x] += e[y]; e[y] = x; return 1;
 	}
-	return p;
-}
-bool connected(int x, int y) {
-	return find(x) == find(y);
-}
-
-void unify(int first, int second) {
-	int u = find(first);
-	int v = find(second);
-
-	if(u != v) {
-		parent[u] = parent[v];
-	}
-}
-
+};
