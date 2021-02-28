@@ -8,6 +8,9 @@ struct modint {
     ll v;
     static constexpr int MOD = _S;
     static_assert(MOD > 0, "MOD HAS TO BE G than 0");
+    modint() : v(0) {}
+    modint(ll V) : v(V) {}
+    
     ll gcd(ll x, ll y) {
         return y ? gcd(y, x % y) : x;
     }
@@ -18,8 +21,16 @@ struct modint {
             return x=((x%m+m)%m);
         } else return v;
     }
-    
-    friend bool operator != (const modint<MOD>&a, const modint<MOD>&b) {return a.v != b.v;}
+    explicit operator int() const {return v;}
+    friend ostream& operator << (ostream& os, const modint&m) {
+        return os << int(m);
+    }
+    friend istream& operator >> (istream &os, const modint&m) {
+        ll V; os >> V; 
+        m = modint(V);
+        return os;
+    }
+    friend bool operator != (const modint<MOD>&a, const modint &b) {return a.v != b.v;}
     friend bool operator == (const modint<MOD> &a, const modint<MOD>&b) {return a.v == b.v;};
     modint &operator =(ll a) {
         v=a;
@@ -102,3 +113,4 @@ struct modint {
     
     
 };
+
