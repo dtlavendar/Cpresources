@@ -19,8 +19,8 @@ struct modint {
         } else return v;
     }
     
-    friend operator != (const modint<MOD>&a, const modint<MOD>&b) {return a.v != b.v;}
-    friend operator == (const modint<MOD> &a, const modint<MOD>&b) {return a.v == b.v;};
+    friend bool operator != (const modint<MOD>&a, const modint<MOD>&b) {return a.v != b.v;}
+    friend bool operator == (const modint<MOD> &a, const modint<MOD>&b) {return a.v == b.v;};
     modint &operator =(ll a) {
         v=a;
         return *this;
@@ -102,12 +102,3 @@ struct modint {
     
     
 };
-using num = modint<int(1e9+7)>;
-int main() {
-    vector<num> a(15);
-    a[0].v=1;
-    for(int i=1; i < 15; i++) {
-        a[i] = a[i-1] *(long long) i;
-    }
-    cout << a[14].v << "\n";
-}
