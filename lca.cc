@@ -1,19 +1,3 @@
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <chrono>
-#include <cmath>
-#include <cstring>
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <random>
-#include <set>
-#include <vector>
-using namespace std;
 struct lca {
 	vector<vector<int>> Gr;
 	vector<int> tint;
@@ -54,6 +38,7 @@ struct lca {
 		}
 	}
 	void addUniEdge(int u, int v) {
+		assert(u >=0 && v >= 0 && u < Gr.size() && v < Gr.size());
 		Gr[u].push_back(v);
 		Gr[v].push_back(u);
 	}
@@ -61,11 +46,13 @@ struct lca {
 		Gr[u].push_back(v);
 	}
 
-
+	void init(int N) {
+		Gr.assign(N, vector<int>());
+	}
 	void process(int N, int root=0) {
 		l = ceil(log2(N+0.0))+1;
 		up.assign(N, vector<int>(l));
-		Gr.assign(N, vector<int>());
+		
 		tint.assign(N, 0);
 		tout.assign(N, 0);
 		timer=0;
