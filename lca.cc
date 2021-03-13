@@ -1,76 +1,74 @@
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <cstring>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <set>
+#include <vector>
+using namespace std;
 struct lca {
-	vector<vector<int>> edges;
-	vector<int> levels;
-	vector<bool> vis;
-	vector<int> par;
-	int n;
-	
-	void init(int s) {
-		n = s;
-		edges = vector<vector<int>> (n, vector<int>());
-		vis = vector<bool> (n);
-		par = vector<int> (n);
-		levels = vector<int> (n, 0);
+	vector<vector<int>> Gr;
+	vector<int> tint;
+	vector<int> tout;
+	vector<vector<int>> up;
+	int timer=0;
+	int l;
+
+	void dfs(int x, int p) {
+		tint[x]=++timer;
+		up[x][0]=p;
+		for(int L = 1; L < l; L++) {
+			up[x][L]=up[up[x][L-1]][L-1];
+		}
+		for(int edge: Gr[x]) {
+			if(edge != p)
+				dfs(edge, x);
+		}
+		tout[x]=++timer;
 	}
-	
-	void addEdge(int x, int y) {
-		edges[x].push_back(y);
-		edges[y].push_back(x);
+	bool is_ancestor(int u, int v) {
+		return tint[u] <= tint[v] && tout[u] >= tout[v];
 	}
-	
-	void setRoot(int cur, int p=0) {
-		if(vis[cur]) return;
-		vis[cur]=true;
-		levels[cur]=p;
-		
-		for(int x: edges[cur]) {
-			if(!vis[x]) {
-				setRoot(x, p+1);
+
+	int get_lca(int u, int v) {
+		if(is_ancestor(u, v))
+			return u;
+		else if(is_ancestor(v, u))
+			return v;
+
+		else {
+			for(int i = l - 1; i >= 0; i--) {
+				if(!is_ancestor(up[u][i], v))
+					u = up[u][i];
 			}
+
+			return up[u][0];
 		}
 	}
-	
-	
-	void lca(int x, int y) {
-		int l = x, r = y;
-		
-		while(levels[l] > levels[r]) {
-			for(auto edge: edges[l]) {
-				if(levels[edge] < levels[l] && levels[edge] >= r) {
-					l = edge;
-					break;
-				}
-			}
-		}
-		while(levels[r] > levels[l]) {
-			for(auto edge: edges[r]) {
-				if(levels[edge] < levels[r] && levels[edge] >= l) {
-					r = edge;
-					break;
-				}
-			}
-		}
-		
-		if(l == r) {
-			return l;
-		}
-		
-		while(l != r) {
-			for(auto edge: edges[r]) {
-				if(sz[edge] < sz[r]) {
-					r=edge;
-					break;
-				}
-			}
-			for(auto edge: edges[l]) {
-				if(sz[edge] < sz[l]) {
-					l = edge;
-					break;
-				}
-			}
-		}
-		// O(n) or log n?
-		
-		return l;
+	void addUniEdge(int u, int v) {
+		Gr[u].push_back(v);
+		Gr[v].push_back(u);
+	}
+	void addDirEdge(int u, int v) {
+		Gr[u].push_back(v);
+	}
+
+
+	void process(int N, int root=0) {
+		l = ceil(log2(N+0.0))+1;
+		up.assign(N, vector<int>(l));
+		Gr.assign(N, vector<int>());
+		tint.assign(N, 0);
+		tout.assign(N, 0);
+		timer=0;
+		dfs(root, root);
 	}
 };
