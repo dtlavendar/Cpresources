@@ -34,7 +34,7 @@ struct merge_sort_tree {
 		} else {
 			int mid = (t1+t2)>>1;
 			build(ver << 1, t1, mid);
-			build(ver << 1 | 1, mid + 1, r);
+			build(ver << 1 | 1, mid + 1, t2);
 			data[ver] = combine(data[ver << 1], data[ver << 1 | 1]);
 		}
 	}
@@ -47,8 +47,8 @@ struct merge_sort_tree {
 		
 		
 		if(l <= t1 && r >= t2) {
-			int b = lower_bound(data[ver].begin(), data[ver].end(), x);
-			int c = upper_bound(data[ver].begin(), data[ver].end(), x);
+			int b = lower_bound(data[ver].begin(), data[ver].end(), x) - data[ver].begin();
+			int c = upper_bound(data[ver].begin(), data[ver].end(), x) - data[ver].begin();
 			return (c - b);
 		} else {
 			int mid = (t1 + t2) >> 1;
