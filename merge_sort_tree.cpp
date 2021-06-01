@@ -2,7 +2,7 @@ struct merge_sort_tree {
 	vector<vector<int>> data;
 	vector<int> a;
 	merge_sort_tree(int T, vector<int> avx) {
-		data.resize(T << 1 | 1);
+		data.resize(T << 1);
 		// apparently if doesn't work if T is a power of 2, but honestly i have no idea how true / false this is
 		a = avx;
 	}
@@ -21,9 +21,9 @@ struct merge_sort_tree {
 			}
 		}
 		
-		while(l < int(a.size())) ans.push_back(a[l]);
+		while(l < int(a.size())) ans.push_back(a[l++]);
 		
-		while(r < int(b.size())) ans.push_back(b[r]);
+		while(r < int(b.size())) ans.push_back(b[r++]);
 		
 		return ans;
 	}
