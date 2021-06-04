@@ -8,6 +8,7 @@ struct segtree {
     segtree(vector<T> &t) {
         A = t;
         tree.resize(int(A.size()) * 4);
+        build();
     }
 
 
