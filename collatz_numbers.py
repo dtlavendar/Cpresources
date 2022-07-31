@@ -1,15 +1,18 @@
 collatz_numbers = open("numbers.txt", "w")
-def collatz(num):
-    collatz_numbers.write(str(num) + " ")
-    if num == 1:
-        return
-    elif num % 2 == 0:
-        collatz(num // 2)
-    else:
-        collatz(num * 3 + 1)
-    
+
+mx = 1
+
+
 for i in range(1, 3001):
-    collatz(i)
-    collatz_numbers.write("\n")
+    while i > 1:
+        mx = max(mx, i)
+        if i % 2 == 1:
+            i = 3 * i + 1
+        else:
+            i = i // 2
+    collatz_numbers.write(str(mx) + "\n")
+    mx = 1
+
+collatz_numbers.close()
 
 
