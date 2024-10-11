@@ -28,6 +28,6 @@ struct Hashing {
 		if(l == 0)
 			return hash_array[r];
 		else
-			return (hash_array[r] - hash_array[l - 1]*prefix_hash_store[r-l+1]) % mod;
+			return ((hash_array[r] - hash_array[l - 1]*prefix_hash_store[r-l+1]) % mod + mod) % mod;
 	}
 };
