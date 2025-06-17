@@ -1,2 +1,2 @@
 # Cpresources
-Bunch of Cp Resources and Basic Problems
+Variety of Algorithms and Data Structures I've implemented over the years
